@@ -1,0 +1,15 @@
+backports.ssl-match-hostname==3.7.0.1
+backports.weakref==1.0.post1
+certifi==2019.9.11
+chardet==3.0.4
+Click==7.0
+DateTime==4.3
+dictdiffer==0.8.0
+idna==2.8
+pytz==2019.3
+PyYAML==5.1.2
+requests==2.22.0
+urllib3==1.25.7
+viptela==0.1
+zope.interface==4.7.1
+https://github.com/bobthebutcher/viptela/archive/master.zip
