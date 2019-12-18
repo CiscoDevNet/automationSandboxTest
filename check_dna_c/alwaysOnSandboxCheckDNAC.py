@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen, ssl, socket
 DEF_TIMEOUT = 10
 USER_DNA = "devnetuser"
 PASSWORD_DNA = "Cisco123!"
+f = open("error.txt", "w")
 
 def main():
     url = "https://sandboxdnac.cisco.com/"
@@ -18,11 +19,13 @@ def main():
     sandboxAvailability(url)
     checkSimpleRequest(url)
     checkSSlcertificate(url)
+    f.close()
 
 def sandboxAvailability(url):
     response = requests.get(url)
     if response.status_code != 200:
-        #send notification to bot
+        f.write("response.status_code != 200 ")
+        f.write(response.status_code)
         exit()
     return (response.status_code)
 
@@ -44,17 +47,16 @@ def checkSimpleRequest(url):
     headers = {'x-auth-token': tokenDNA}
     try:
         response = requests.get(urlSimpleDNA, headers=headers)
-        print (response.json())
+        #print (response.json())
         if response.status_code != 200:
-            print("Error SimpleRequest status_code != 200")
-            # send notification to bot
+            f.write("Error SimpleRequest status_code != 200")
             exit()
     except Timeout as e:
         raise Timeout(e)
     try:
         b = response.json()['response'][0]['type']
     except IndexError:
-        print("Error SimpleRequest index")
+        f.write("Error SimpleRequest index")
         # send notification to bot
         exit()
 
@@ -74,7 +76,7 @@ def checkSSlcertificate(url):
                 data = ssock.getpeercert()
                 # print(ssock.getpeercert())
         except CertificateError:
-            print("SSL certificate error ", url)
+            f.write("SSL certificate error ")
             # send notification to bot
             exit()
 
@@ -83,16 +85,16 @@ def checkSSlcertificate(url):
 
     date_time_obj = datetime.datetime.strptime(date_time_str, '%b %d %H:%M:%S %Y GMT')
 
-    print('Date:', date_time_obj)
+    #print('Date:', date_time_obj)
     currentTime = datetime.datetime.now()
-    print (currentTime)
+    #print (currentTime)
     certificateExpirationDate = date_time_obj - currentTime
-    print (str(certificateExpirationDate))
+    #print (str(certificateExpirationDate))
     daysToExpire = str(certificateExpirationDate).split()[0]
-    print (daysToExpire)
+    #print (daysToExpire)
     if int(daysToExpire) <= 60:
-        print("less then 60 days to expire SSL certificate for URL ", url)
-        # send notification to bot
+        f.write("less then 60 days to expire SSL certificate for URL ")
+
 
 if __name__ == "__main__":
     main()
