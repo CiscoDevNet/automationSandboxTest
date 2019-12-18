@@ -16,16 +16,17 @@ f = open("error.txt", "w")
 def main():
     url = "https://sandboxdnac.cisco.com/"
     f.write("Error test")
+    f.close()
     sandboxAvailability(url)
     checkSimpleRequest(url)
     checkSSlcertificate(url)
-    f.close()
 
 def sandboxAvailability(url):
     response = requests.get(url)
     if response.status_code != 200:
         f.write("response.status_code != 200 ")
         f.write(response.status_code)
+        f.close()
         exit()
     return (response.status_code)
 
@@ -50,6 +51,7 @@ def checkSimpleRequest(url):
         #print (response.json())
         if response.status_code != 200:
             f.write("Error SimpleRequest status_code != 200")
+            f.close()
             exit()
     except Timeout as e:
         raise Timeout(e)
@@ -77,6 +79,7 @@ def checkSSlcertificate(url):
                 # print(ssock.getpeercert())
         except CertificateError:
             f.write("SSL certificate error ")
+            f.close()
             # send notification to bot
             exit()
 
@@ -94,6 +97,9 @@ def checkSSlcertificate(url):
     #print (daysToExpire)
     if int(daysToExpire) <= 60:
         f.write("less then 60 days to expire SSL certificate for URL ")
+        f.close()
+        exit()
+
 
 
 if __name__ == "__main__":
