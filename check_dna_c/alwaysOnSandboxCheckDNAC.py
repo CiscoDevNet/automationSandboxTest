@@ -11,7 +11,7 @@ from urllib.request import Request, urlopen, ssl, socket
 DEF_TIMEOUT = 10
 USER_DNA = "devnetuser"
 PASSWORD_DNA = "Cisco123!"
-f = open("error.txt", "a")
+f = open("error.txt", "w")
 
 def main():
     url = "https://sandboxdnac.cisco.com/"
