@@ -15,7 +15,7 @@ f = open("error.txt", "w")
 
 def main():
     url = "https://sandboxdnac.cisco.com/"
-
+    f.write("Error test")
     sandboxAvailability(url)
     checkSimpleRequest(url)
     checkSSlcertificate(url)
@@ -63,7 +63,7 @@ def checkSimpleRequest(url):
 def checkSSlcertificate(url):
     base_url = url.replace('https://', '')
     base_url = base_url.replace('/', '')
-    print ("base_url", base_url)
+    #print ("base_url", base_url)
     port = '443'
 
     hostname = base_url
