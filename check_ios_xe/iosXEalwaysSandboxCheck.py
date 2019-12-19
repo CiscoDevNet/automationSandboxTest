@@ -39,7 +39,7 @@ def sandboxAvailability(url):
         response = requests.get(url, verify=False)
         if response.status_code != 200:
             f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
-            f.write(response.status_code)
+            f.write(str(response.status_code))
             #send notification to bot
             exit()
         f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
@@ -88,8 +88,9 @@ def checkRestconfConnections(url):
                                     )
             if response.status_code == 200:
                 print("RESTCONF Connected - Status Code: ", response.status_code)
+                f.write("Attempt number {} to connect with RESTCONF failed.".format(_ + 1))
             else:
-                f.write("ERROR: RESTCONF Status Code is" + response.status_code + " (should be 200).")
+                f.write("ERROR: RESTCONF Status Code is" + str(response.status_code) + " (should be 200).")
 
         # If unable to connect, fail test
         except Exception as e:
