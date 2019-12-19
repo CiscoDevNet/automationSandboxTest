@@ -29,7 +29,7 @@ def main():
     sandboxAvailability(url)
     checkNetconfConnections(url)
     checkRestconfConnections(url)
-    checkSSHConnections(url)
+    #checkSSHConnections(url)
     #checkSSlcertificate(url)
     f.close()
 
