@@ -15,11 +15,10 @@ f = open("error.txt", "w")
 
 def main():
     url = "https://sandboxdnac.cisco.com/"
-    f.write("Error test")
-    f.close()
     sandboxAvailability(url)
     checkSimpleRequest(url)
     checkSSlcertificate(url)
+    f.close()
 
 def sandboxAvailability(url):
     response = requests.get(url)

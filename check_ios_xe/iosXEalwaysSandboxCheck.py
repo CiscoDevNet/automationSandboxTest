@@ -1,16 +1,16 @@
 import requests
 import datetime
 requests.packages.urllib3.disable_warnings()
-from requests.exceptions import Timeout
-import base64
-import ssl
+#from requests.exceptions import Timeout
+#import base64
+#import ssl
 from backports.ssl_match_hostname import match_hostname, CertificateError
 from urllib.request import Request, urlopen, ssl, socket
-from pyats.topology import loader
-from genie.conf import Genie
-from genie.abstract import Lookup
+#from pyats.topology import loader
+#from genie.conf import Genie
+#from genie.abstract import Lookup
 from ncclient import manager
-import xmltodict
+#import xmltodict
 import paramiko
 
 
@@ -21,6 +21,7 @@ RESTCONF_PORT = 9443
 USER = "developer"
 PASSWORD = "C1sco12345"
 MAX_RETRIES = 2
+f = open("error.txt", "w")
 
 def main():
     url = "https://ios-xe-mgmt.cisco.com"
@@ -30,18 +31,23 @@ def main():
     checkRestconfConnections(url)
     checkSSHConnections(url)
     #checkSSlcertificate(url)
+    f.close()
 
 def sandboxAvailability(url):
     url = url + ":9443/webui/"
     try:
         response = requests.get(url, verify=False)
         if response.status_code != 200:
-            print ("Sandbox ", url, " Status code ", response.status_code)
+            f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
+            f.write(response.status_code)
             #send notification to bot
             exit()
+        f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
+        f.write(response.status_code)
         return (response.status_code)
     except requests.exceptions.RequestException as e:
-        print ("Connection error: ", e)
+        f.write("Connection error: ")
+        f.write(e)
         exit()
 
 def checkNetconfConnections(url):
@@ -60,13 +66,13 @@ def checkNetconfConnections(url):
 
         # If unable to connect, fail test
         except Exception as e:
-            print("Attempt number {} to connect with NETCONF failed.".format(_ + 1))
+            f.write("Attempt number {} to connect with NETCONF failed.".format(_ + 1))
             print(e)
         else:
             break
     # If unable to connect, fail test
     else:
-            print ("Failed to establish NETCONF connection to ", url)
+        f.write("Failed to establish NETCONF connection to https://ios-xe-mgmt.cisco.com")
 
 def checkRestconfConnections(url):
     url = url.replace('https://', '')
@@ -83,12 +89,12 @@ def checkRestconfConnections(url):
             if response.status_code == 200:
                 print("RESTCONF Connected - Status Code: ", response.status_code)
             else:
-                print("ERROR: RESTCONF Status Code is" + response.status_code + " (should be 200).")
+                f.write("ERROR: RESTCONF Status Code is" + response.status_code + " (should be 200).")
 
         # If unable to connect, fail test
         except Exception as e:
-            print("Attempt number {} to connect with RESTCONF failed.".format(_ + 1))
-            print(e)
+            f.write("Attempt number {} to connect with RESTCONF failed.".format(_ + 1))
+            f.write(e)
         else:
             break
 
@@ -99,18 +105,18 @@ def checkSSHConnections(url):
         try:
             client.connect(hostname=url, username=USER, password=PASSWORD, port=SSH_PORT)
         except Exception as e:
-            print("Attempt number {} to connect with SSH failed.".format(_ + 1))
-            print(e)
+            f.write("Attempt number {} to connect with SSH failed.".format(_ + 1))
+            f.write(e)
         else:
             break
     # If unable to connect, fail test
     else:
-        print("Failed to establish SSH connection to ", url)
+        f.write("Failed to establish SSH connection to https://ios-xe-mgmt.cisco.com")
 
 def checkSSlcertificate(url):
     base_url = url.replace('https://', '')
     base_url = base_url.replace('/', '')
-    print ("base_url", base_url)
+    #print ("base_url", base_url)
     port = '443'
 
     hostname = base_url
