@@ -29,7 +29,7 @@ def main():
     sandboxAvailability(url)
     checkNetconfConnections(url)
     checkRestconfConnections(url)
-    #checkSSHConnections(url)
+    checkSSHConnections(url)
     #checkSSlcertificate(url)
     f.close()
 
@@ -87,7 +87,6 @@ def checkRestconfConnections(url):
                                     )
             if response.status_code == 200:
                 print("RESTCONF Connected - Status Code: ", response.status_code)
-                f.write("Attempt number {} to connect with RESTCONF failed.".format(_ + 1))
             else:
                 f.write("ERROR: RESTCONF Status Code is" + str(response.status_code) + " (should be 200).")
 
@@ -106,7 +105,7 @@ def checkSSHConnections(url):
             client.connect(hostname=url, username=USER, password=PASSWORD, port=SSH_PORT)
         except Exception as e:
             f.write("Attempt number {} to connect with SSH failed.".format(_ + 1))
-            f.write(e)
+            f.write(str(e))
         else:
             break
     # If unable to connect, fail test
