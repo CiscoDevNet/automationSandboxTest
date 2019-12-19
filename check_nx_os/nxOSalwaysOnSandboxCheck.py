@@ -2,17 +2,17 @@ import requests
 import datetime
 requests.packages.urllib3.disable_warnings()
 from requests.exceptions import Timeout
-import base64
-import ssl
+#import base64
+#import ssl
 from backports.ssl_match_hostname import match_hostname, CertificateError
 from urllib.request import Request, urlopen, ssl, socket
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-from pyats.topology import loader
-from genie.conf import Genie
-from genie.abstract import Lookup
+#from pyats.topology import loader
+#from genie.conf import Genie
+#from genie.abstract import Lookup
 from ncclient import manager
-import xmltodict
+#import xmltodict
 import paramiko
 
 
