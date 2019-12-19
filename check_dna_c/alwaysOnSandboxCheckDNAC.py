@@ -23,8 +23,7 @@ def main():
 def sandboxAvailability(url):
     response = requests.get(url)
     if response.status_code != 200:
-        f.write("response.status_code != 200 ")
-        f.write(response.status_code)
+        f.write("response.status_code != 200 - " + str(response.status_code))
         f.close()
         exit()
     return (response.status_code)

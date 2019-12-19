@@ -38,11 +38,10 @@ def sandboxAvailability(url):
     try:
         response = requests.get(url, verify=False)
         if response.status_code != 200:
-            f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
-            f.write(str(response.status_code))
+            f.write("Sandbox " + url + " Status code " + str(response.status_code) + "\n")
             #send notification to bot
             exit()
-        f.write("Sandbox " + url + " Status code " + str(response.status_code) + "\n")
+        #f.write("Sandbox " + url + " Status code " + str(response.status_code) + "\n")
         return (response.status_code)
     except requests.exceptions.RequestException as e:
         f.write("Connection error: ")
