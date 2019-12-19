@@ -43,7 +43,7 @@ def sandboxAvailability(url):
             #send notification to bot
             exit()
         f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
-        f.write(response.status_code)
+        f.write(str(response.status_code))
         return (response.status_code)
     except requests.exceptions.RequestException as e:
         f.write("Connection error: ")
