@@ -42,8 +42,7 @@ def sandboxAvailability(url):
             f.write(str(response.status_code))
             #send notification to bot
             exit()
-        f.write("Sandbox https://ios-xe-mgmt.cisco.com Status code ")
-        f.write(str(response.status_code))
+        f.write("Sandbox " + url + " Status code " + str(response.status_code) + "\n")
         return (response.status_code)
     except requests.exceptions.RequestException as e:
         f.write("Connection error: ")
@@ -95,7 +94,7 @@ def checkRestconfConnections(url):
         # If unable to connect, fail test
         except Exception as e:
             f.write("Attempt number {} to connect with RESTCONF failed.".format(_ + 1))
-            f.write(e)
+            f.write(str(e))
         else:
             break
 
