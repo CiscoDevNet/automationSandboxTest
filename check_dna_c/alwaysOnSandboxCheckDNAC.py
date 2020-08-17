@@ -1,6 +1,5 @@
 import requests
 import datetime
-requests.packages.urllib3.disable_warnings()
 from requests.exceptions import Timeout
 import base64
 import ssl
@@ -15,13 +14,14 @@ f = open("error.txt", "w")
 
 def main():
     url = "https://sandboxdnac.cisco.com/"
+    requests.packages.urllib3.disable_warnings()
     sandboxAvailability(url)
     checkSimpleRequest(url)
     checkSSlcertificate(url)
     f.close()
 
 def sandboxAvailability(url):
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     if response.status_code != 200:
         f.write("response.status_code != 200 - " + str(response.status_code))
         f.close()
@@ -45,8 +45,8 @@ def checkSimpleRequest(url):
 
     headers = {'x-auth-token': tokenDNA}
     try:
-        response = requests.get(urlSimpleDNA, headers=headers)
-        #print (response.json())
+        response = requests.get(urlSimpleDNA, headers=headers, verify=False)
+        print (response.json())
         if response.status_code != 200:
             f.write("Error SimpleRequest status_code != 200")
             f.close()
@@ -63,7 +63,7 @@ def checkSimpleRequest(url):
 def checkSSlcertificate(url):
     base_url = url.replace('https://', '')
     base_url = base_url.replace('/', '')
-    #print ("base_url", base_url)
+    print ("base_url", base_url)
     port = '443'
 
     hostname = base_url
@@ -72,9 +72,9 @@ def checkSSlcertificate(url):
     with socket.create_connection((hostname, port)) as sock:
         try:
             with context.wrap_socket(sock, server_hostname=hostname) as ssock:
-                #print("Sock", ssock.version())
+                print("Sock", ssock.version())
                 data = ssock.getpeercert()
-                # print(ssock.getpeercert())
+                print(ssock.getpeercert())
         except CertificateError:
             f.write("SSL certificate error ")
             f.close()
@@ -86,15 +86,15 @@ def checkSSlcertificate(url):
 
     date_time_obj = datetime.datetime.strptime(date_time_str, '%b %d %H:%M:%S %Y GMT')
 
-    #print('Date:', date_time_obj)
+    print('Date:', date_time_obj)
     currentTime = datetime.datetime.now()
-    #print (currentTime)
+    print (currentTime)
     certificateExpirationDate = date_time_obj - currentTime
-    #print (str(certificateExpirationDate))
+    print (str(certificateExpirationDate))
     daysToExpire = str(certificateExpirationDate).split()[0]
-    #print (daysToExpire)
+    print (daysToExpire)
     if int(daysToExpire) <= 60:
-        f.write("less then 60 days to expire SSL certificate for URL ")
+        f.write("less than 60 days to expire SSL certificate for URL ")
         f.close()
         exit()
 
