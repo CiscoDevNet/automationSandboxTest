@@ -31,7 +31,7 @@ genie.trafficgen==19.10
 genie.utils==19.10
 idna==2.8
 IxNetwork==9.0.1915.16
-Jinja2==2.10.3
+Jinja2==2.11.3
 jsonpickle==1.2
 junit-xml==1.8
 lxml==4.4.1
