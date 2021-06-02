@@ -67,7 +67,7 @@ setproctitle==1.1.10
 six==1.13.0
 tqdm==4.38.0
 unicon==19.10
-urllib3==1.25.7
+urllib3==1.26.5
 websocket-client==0.56.0
 xlrd==1.2.0
 XlsxWriter==1.2.6
