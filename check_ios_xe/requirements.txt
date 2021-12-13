@@ -34,7 +34,7 @@ IxNetwork==9.0.1915.16
 Jinja2==2.11.3
 jsonpickle==1.2
 junit-xml==1.8
-lxml==4.6.3
+lxml==4.6.5
 MarkupSafe==1.1.1
 multidict==4.5.2
 ncclient==0.6.6
