@@ -39,7 +39,7 @@ MarkupSafe==1.1.1
 multidict==4.5.2
 ncclient==0.6.6
 netaddr==0.7.19
-paramiko==2.6.0
+paramiko==2.10.1
 pathspec==0.6.0
 prettytable==0.7.2
 psutil==5.6.6
